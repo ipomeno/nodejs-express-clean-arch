@@ -1,0 +1,33 @@
+{
+  "name": "nodejs-express-clean-arch",
+  "version": "1.0.0",
+  "description": "Estudando arquitetura limpa usando padrões javascript em vez forçar contratos de interface typescript. Apenas para ver como isso poderia ser aplicado de na prática.",
+  "type": "module",
+  "scripts": {
+    "start": "NODE_ENV=dev nodemon ./src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ipomeno/nodejs-express-clean-arch.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ipomeno/nodejs-express-clean-arch/issues"
+  },
+  "homepage": "https://github.com/ipomeno/nodejs-express-clean-arch#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "knex": "^3.1.0",
+    "mysql2": "^3.9.1",
+    "nocache": "^4.0.0",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
