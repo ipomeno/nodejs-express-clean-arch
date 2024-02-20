@@ -4,7 +4,7 @@
   "description": "Estudando arquitetura limpa usando padrões javascript em vez forçar contratos de interface typescript. Apenas para ver como isso poderia ser aplicado de na prática.",
   "type": "module",
   "scripts": {
-    "start": "NODE_ENV=dev nodemon ./src/server.js",
+    "start": "NODE_ENV=dev nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
