@@ -1,17 +1,18 @@
 import path from 'path';
+import config from '../../config.js';
 
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
 
 const dbConfig = {
   dev: {
-    client: 'mysql',
+    client: 'mysql2',
     connection: {
-      host: 'locahost',
-      user: 'root',
-      password: 'root',
-      port: 3306,
-      database: 'dblara',
+      host: config.db.host,
+      user: config.db.user,
+      password: config.db.password,
+      port: config.db.port,
+      database: config.db.database,
       suportBigNumbers: true,
       bigNumberStrings: true
     },
@@ -21,4 +22,4 @@ const dbConfig = {
   }
 }
 
-export { dbConfig };
+export default dbConfig[ process.env.NODE_ENV ];

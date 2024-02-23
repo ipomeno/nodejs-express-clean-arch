@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "NODE_ENV=dev nodemon ./src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "knex:migrate:make": "NODE_ENV=dev knex --knexfile ./src/infra/database/knex/knexfile.js migrate:make",
+    "knex:migrate:up": "NODE_ENV=dev knex --knexfile ./src/infra/database/knex/knexfile.js migrate:up",
+    "knex:migrate:down": "NODE_ENV=dev knex --knexfile ./src/infra/database/knex/knexfile.js migrate:down"
   },
   "repository": {
     "type": "git",
