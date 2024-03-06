@@ -1,17 +1,23 @@
-export class PerfilMemoryRepository {
-  constructor() {
-    this.db = [
-      {id: 1, nome: 'admin', cadastro: '2021-01-01', alteracao: '2021-01-01'},
-    ];
-  }
+function createPerfilMemoryRepository() {
+  const dataset = [
+    {id: 1, nome: 'admin', cadastro: '2021-01-01', alteracao: '2021-01-01'},
+  ];
 
   /**
    * 
    * @param {bigint} id 
    * @returns {Promise<Perfil>}
    */
-  async encontrarPorId(id) {
-    return this.db.find((perfil) => perfil.id === id);
+  async function encontrarPorId(id) {
+    return new Promise((resolve, reject) => {
+      try {
+        const perfil = dataset.find((perfil) => perfil.id === id);
+        resolve(perfil);
+      }
+      catch(error) {
+        reject(error);
+      }
+    })
   }
 
   /**
@@ -19,8 +25,16 @@ export class PerfilMemoryRepository {
    * @param {string} nome 
    * @returns {Promise<Array<Perfil>>}
    */
-  async listarPorNome(nome) {
-    return this.db.filter((perfil) => perfil.nome === nome);
+  async function listarPorNome(nome) {
+    return new Promise((resolve, reject) => {
+      try {
+        const perfis = dataset.filter((perfil) => perfil.nome === nome);
+        resolve(perfis);
+      }
+      catch(error) {
+        reject(error);
+      }
+    })
   }
 
   /**
@@ -28,7 +42,22 @@ export class PerfilMemoryRepository {
    * @param {bigint} id 
    * @returns {Promise<boolean>}
    */
-  async temId(id) {
-    return this.db.some((perfil) => perfil.id === id);
+  async function existeId(id) {
+    return new Promise((resolve, reject) => {
+      try {
+        const result = dataset.some((perfil) => perfil.id === id);
+        resolve(result); 
+      } catch (error) {
+        reject(error);
+      }
+    })
+  }
+
+  return {
+    encontrarPorId,
+    listarPorNome,
+    existeId,
   }
 }
+
+export { createPerfilMemoryRepository };

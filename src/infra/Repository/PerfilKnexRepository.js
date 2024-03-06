@@ -3,18 +3,21 @@
  * @property {bigint} id
  * @property {string} nome
  */
-export class PerfilKnexRepository {
-  constructor(knex) {
-    this.db = knex;
-  }
 
+/**
+ * 
+ * @param {knex} knex 
+ * @returns {object}
+ */
+function createPerfilKnexRepository(knex) {
+  
   /**
    * 
    * @param {bigint} id 
-   * @returns {Promise<Perfil>}
+   * @returns Promise<Perfil>
    */
-  async encontrarPorId(id) {
-    return await this.db('perfis')
+  async function encontrarPorId(id) {
+    return await knex('perfis')
       .select(
         'perfis.id',
         'perfis.nome',
@@ -26,14 +29,21 @@ export class PerfilKnexRepository {
 
   /**
    * 
-   * @param {string} nome 
-   * @returns {Promise<boolean>}
+   * @param {bigint} id 
+   * @returns Promise<boolean>
    */
-  async temId(id) {
-    const result = await this.db('perfis')
+  async function existeId(id) {
+    const result = await knex('perfis')
       .where('perfis.id', id)
       .count('perfis.id', { as: 'count' });
 
     return parseInt(result[0].count) > 0;
   }
+
+  return {
+    encontrarPorId,
+    existeId,
+  }
 }
+
+export { createPerfilKnexRepository }

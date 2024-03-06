@@ -1,14 +1,26 @@
-
 /**
- * @typedef {Object} LoginOutput
- * @property {Usuario} user
- * @property {Perfil} profile
+ * @typedef {Object} Usuario 
+ * @property {bigint} id
+ * @property {string} nome
+ * @property {string} cpf
+ * @property {string} telefone
+ * @property {string} email
+ * @property {string} senha
+ * @property {bigint} perfil_id
+ * @property {string} cadastro
+ * @property {string} alteracao
  */
 
 /**
- * @typedef {Object} LoginInput
- * @property {string} email
- * @property {string} senha
+ * @typedef {Object} Perfil
+ * @property {bigint} id
+ * @property {string} nome
+ */
+
+/**
+ * @typedef {Object} LoginOutput
+ * @property {Usuario} usuario
+ * @property {Perfil} perfil
  */
 
   /**
@@ -40,13 +52,18 @@
  * @param {PerfilRepositorio} PerfilRepositorio 
  * @returns {function(LoginInput): Promise<LoginOutput>}
  */
-function createLoginUseCase(usuarioRepository, perfilRepository) {
-  return async function (loginInput) {
+function createAuthLoginUseCase(usuarioRepository, perfilRepository) {
+  /**
+   * 
+   * @param {import("../../infra/express/controllers/usuarios/LoginInput").LoginInput} loginInput 
+   * @returns Promise<LoginOutput>
+   */
+  async function authLoginUseCase(loginInput) {
     const { email, senha } = loginInput;
     const lista = await usuarioRepository.listarPorEmail(email);
     const usuario = encontrarPorSenha(lista, senha);
 
-    const result = await perfilRepository.temId(usuario.perfil_id);
+    const result = await perfilRepository.existeId(usuario.perfil_id);
     if (!result) {
       throw new Error(`Perfil de acesso não encontrado para o usuário ${usuario.id}::${usuario.email}`);
     }
@@ -54,6 +71,8 @@ function createLoginUseCase(usuarioRepository, perfilRepository) {
     const perfil = await perfilRepository.encontrarPorId(usuario.perfil_id);
     return { usuario, perfil };
   }
+
+  return authLoginUseCase;
 }
 
-export { createLoginUseCase };
+export { createAuthLoginUseCase };

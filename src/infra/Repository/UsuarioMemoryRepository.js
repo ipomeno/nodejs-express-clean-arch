@@ -1,35 +1,65 @@
-export class UsuarioMemoryRepository {
-  constructor() {
-    this.db = [
-      {id: 1, nome: 'Roberto', email: 'roberto@gmail.com', senha: '123456', perfil_id: 1, cadastro: '2021-01-01', alteracao: '2021-01-01', ativo: true},
-      {id: 1, nome: 'Fernanda', email: 'fernanda@gmail.com', senha: '456', perfil_id: 1, cadastro: '2021-01-01', alteracao: '2021-01-01', ativo: true},
-    ];
-  }
+function createUsuarioMemoryRepository() {
+
+  const dataset = [
+    {id: 1, nome: 'Roberto', email: 'roberto@gmail.com', senha: '123456', perfil_id: 1, cadastro: '2021-01-01', alteracao: '2021-01-01', ativo: true},
+    {id: 1, nome: 'Fernanda', email: 'fernanda@gmail.com', senha: '456', perfil_id: 1, cadastro: '2021-01-01', alteracao: '2021-01-01', ativo: true},
+  ];
 
   /**
    * 
    * @param {bigint} id 
    * @returns {Promise<Usuario>}
    */
-  async encontrarPorId(id) {
-    return this.db.find((usuario) => usuario.id === id);
+  function encontrarPorId(id) {
+    return new Promise((resolve, reject) => {
+      try {
+        const usuario = dataset.find((usuario) => usuario.id === id);
+        resolve(usuario);
+      }
+      catch(error) {
+        reject(error);
+      }
+    });
   }
 
   /**
    * 
    * @param {string} email 
-   * @returns {Promise<Array<Usuario>>}
+   * @returns Promise<Array<Usuario>>
    */
-  async listarPorEmail(email) {
-    return this.db.filter((usuario) => usuario.email === email);
+  function listarPorEmail(email) {
+    return new Promise((resolve, reject) => {
+      try {
+        const usuarios = dataset.filter((usuario) => usuario.email === email);
+        resolve(usuarios);
+      }
+      catch(error) {
+        reject(error);
+      }
+    })
   }
 
   /**
    * 
-   * @param {bigint} id  
-   * @returns {Promise<boolean>}
+   * @param {bigint} id 
+   * @returns Promise<boolean>
    */
-  async existeId(id) {
-    return this.db.some((usuario) => usuario.id === id);
+  function existeId(id) {
+    return new Promise((resolve, reject) => {
+      try {
+        const result = dataset.some((usuario) => usuario.id === id);
+        resolve(result); 
+      } catch (error) {
+        reject(error);
+      }
+    })
+  }
+
+  return {
+    encontrarPorId,
+    listarPorEmail,
+    existeId,
   }
 }
+
+export { createUsuarioMemoryRepository };

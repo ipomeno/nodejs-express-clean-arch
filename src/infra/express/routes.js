@@ -5,7 +5,7 @@ function createRoutes(app) {
     res.json({message: 'olá mundo!!'});
   });
 
-  app.post('/usuarios/login', loginController); 
+  app.post('/auth/login', loginController); 
 }
 
 export { createRoutes };
