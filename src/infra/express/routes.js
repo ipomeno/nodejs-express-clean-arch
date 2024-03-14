@@ -1,11 +1,20 @@
-import { loginController } from "./controllers/usuarios/loginController.js";
+import { configAuthRoutes } from './auth/configAuthRoutes.js';
+import { configUsuarioRoutes } from './usuarios/configUsuarioRoutes.js';
+
 
 function createRoutes(app) {
   app.get('/', (req, res) => {
     res.json({message: 'olá mundo!!'});
   });
 
-  app.post('/auth/login', loginController); 
+  const configs = [
+    configAuthRoutes,
+    configUsuarioRoutes
+  ];
+
+  for(const config of configs) {
+    config(app);
+  }
 }
 
 export { createRoutes };

@@ -1,4 +1,5 @@
-import { loginControllerPort } from "../../../../Ports/Auth/loginControllerPort.js";
+import { loginControllerPort } from "../../../Ports/Auth/loginControllerPort.js";
+import { createLoginProtectMiddleware } from "./loginMiddleware.js";
 /**
  * 
  * @param {import("express").Request} request 
@@ -18,6 +19,13 @@ async function loginController(request, response, next) {
   } catch (error) {
     next(error);
   }
+};
+
+function createLoginController() {
+  return [
+    createLoginProtectMiddleware(),
+    loginController
+  ];  
 }
 
-export { loginController }
+export { createLoginController }

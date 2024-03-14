@@ -1,8 +1,9 @@
-function createPerfilMemoryRepository() {
-  const dataset = [
-    {id: 1, nome: 'admin', cadastro: '2021-01-01', alteracao: '2021-01-01'},
-  ];
+const dataset = [
+  {id: 1, nome: 'admin', cadastro: '2021-01-01', alteracao: '2021-01-01'},
+];
 
+function createPerfilMemoryRepository() {
+  
   /**
    * 
    * @param {bigint} id 

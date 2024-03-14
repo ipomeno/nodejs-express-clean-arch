@@ -1,9 +1,9 @@
-function createUsuarioMemoryRepository() {
+const dataset = [
+  {id: 1, nome: 'Roberto', email: 'roberto@gmail.com', senha: '123456', perfil_id: 1, cadastro: '2021-01-01', alteracao: '2021-01-01', ativo: true},
+  {id: 2, nome: 'Fernanda', email: 'fernanda@gmail.com', senha: '456', perfil_id: 1, cadastro: '2021-01-01', alteracao: '2021-01-01', ativo: true},
+];
 
-  const dataset = [
-    {id: 1, nome: 'Roberto', email: 'roberto@gmail.com', senha: '123456', perfil_id: 1, cadastro: '2021-01-01', alteracao: '2021-01-01', ativo: true},
-    {id: 1, nome: 'Fernanda', email: 'fernanda@gmail.com', senha: '456', perfil_id: 1, cadastro: '2021-01-01', alteracao: '2021-01-01', ativo: true},
-  ];
+function createUsuarioMemoryRepository() {
 
   /**
    * 
@@ -39,6 +39,16 @@ function createUsuarioMemoryRepository() {
     })
   }
 
+  function todos() {
+    return new Promise((resolve, reject) => {
+      try {
+        resolve(dataset);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   /**
    * 
    * @param {bigint} id 
@@ -55,10 +65,50 @@ function createUsuarioMemoryRepository() {
     })
   }
 
+  /**
+   * 
+   * @param {Object} usuario 
+   * @param {string} usuario.nome
+   * @param {string} usuario.email
+   * @param {string} usuario.senha
+   * @param {bigint} usuario.perfil_id
+   * @returns {Promise<Usuario>}
+   */
+  function adicionar(usuario) {
+    return new Promise((resolve, reject) => {
+      try {
+        usuario.id = dataset.length + 1;
+        usuario.cadastro = new Date().toISOString();
+        usuario.alteracao = new Date().toISOString();
+        usuario.ativo = true;
+
+        dataset.push(usuario);
+        resolve(usuario);
+      } catch (error) {
+        reject(error);
+      }
+    })
+  }
+
+  function alterar(usuario) {
+    return new Promise((resolve, reject) => {
+      try {
+        const index = dataset.findIndex((u) => u.id === usuario.id);
+        usuario = dataset[index] = Object.assign({}, usuario, dataset[index]);
+        resolve(usuario);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   return {
     encontrarPorId,
     listarPorEmail,
     existeId,
+    adicionar,
+    alterar,
+    todos
   }
 }
 
